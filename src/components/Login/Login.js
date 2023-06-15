@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -34,21 +34,21 @@ const Login = (props) => {
   const [emailState, dispatchEmail] = useReducer(emailReducer, {value: '', isValid: undefined});
   const [passwordState, dispatchPassword] = useReducer(passwordReducer, {value: '', isValid: undefined});
 
-  // useEffect(() => {
-  //   // setTimeout() function a.k.a side-effect function delayes 0.5 seconds after execution
-  //   const identifier = setTimeout(() => {
-  //     console.log('side-effect function');
-  //     setFormIsValid(
-  //       enteredEmail.includes('@') && enteredPassword.trim().length > 6
-  //     );
-  //   }, 500);
+  useEffect(() => {
+    // setTimeout() function a.k.a side-effect function delayes 0.5 seconds after execution
+    const identifier = setTimeout(() => {
+      console.log('side-effect function');
+      setFormIsValid(
+        emailState.isValid && passwordState.isValid
+      );
+    }, 500);
 
-  //   // below is called clean-up function
-  //   return () => {
-  //     console.log('clean-up function');
-  //     clearTimeout(identifier);
-  //   };
-  // }, [enteredEmail, enteredPassword]);
+    // below is called clean-up function
+    return () => {
+      console.log('clean-up function');
+      clearTimeout(identifier);
+    };
+  }, [emailState.isValid, passwordState.isValid]);
 
   const emailChangeHandler = (event) => {
     dispatchEmail({type: 'USER_INPUT', value: event.target.value});
