@@ -34,12 +34,15 @@ const Login = (props) => {
   const [emailState, dispatchEmail] = useReducer(emailReducer, {value: '', isValid: undefined});
   const [passwordState, dispatchPassword] = useReducer(passwordReducer, {value: '', isValid: undefined});
 
+  const {isValid: emailIsValid} = emailState;
+  const {isValid: passwordIsValid} = passwordState;
+
   useEffect(() => {
     // setTimeout() function a.k.a side-effect function delayes 0.5 seconds after execution
     const identifier = setTimeout(() => {
       console.log('side-effect function');
       setFormIsValid(
-        emailState.isValid && passwordState.isValid
+        emailIsValid&& passwordIsValid
       );
     }, 500);
 
@@ -48,7 +51,7 @@ const Login = (props) => {
       console.log('clean-up function');
       clearTimeout(identifier);
     };
-  }, [emailState.isValid, passwordState.isValid]);
+  }, [emailIsValid, passwordIsValid]);
 
   const emailChangeHandler = (event) => {
     dispatchEmail({type: 'USER_INPUT', value: event.target.value});
