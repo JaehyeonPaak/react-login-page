@@ -4,6 +4,9 @@ import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
 
+import { useContext } from 'react';
+import AuthContext from '../../context/auth-context';
+
 const emailReducer = (state, action) => {
   if (action.type === 'USER_INPUT') {
     return {value: action.value, isValid: action.value.includes('@')}
@@ -36,6 +39,8 @@ const Login = (props) => {
 
   const {isValid: emailIsValid} = emailState;
   const {isValid: passwordIsValid} = passwordState;
+
+  const context = useContext(AuthContext);
 
   useEffect(() => {
     // setTimeout() function a.k.a side-effect function delayes 0.5 seconds after execution
@@ -79,7 +84,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    context.onLogin(emailState.value, passwordState.value);
   };
 
   return (
